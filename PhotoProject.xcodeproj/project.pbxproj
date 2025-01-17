@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		EA7B6E702D3A4963009B3D52 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = EA7B6E6F2D3A4963009B3D52 /* SnapKit */; };
+		EA7B6E732D3A4971009B3D52 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = EA7B6E722D3A4971009B3D52 /* Alamofire */; };
+		EA7B6E762D3A497B009B3D52 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = EA7B6E752D3A497B009B3D52 /* Kingfisher */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		EA7B6E0B2D3A412A009B3D52 /* PhotoProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +42,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA7B6E762D3A497B009B3D52 /* Kingfisher in Frameworks */,
+				EA7B6E702D3A4963009B3D52 /* SnapKit in Frameworks */,
+				EA7B6E732D3A4971009B3D52 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +87,9 @@
 			);
 			name = PhotoProject;
 			packageProductDependencies = (
+				EA7B6E6F2D3A4963009B3D52 /* SnapKit */,
+				EA7B6E722D3A4971009B3D52 /* Alamofire */,
+				EA7B6E752D3A497B009B3D52 /* Kingfisher */,
 			);
 			productName = PhotoProject;
 			productReference = EA7B6E0B2D3A412A009B3D52 /* PhotoProject.app */;
@@ -107,6 +119,11 @@
 			);
 			mainGroup = EA7B6E022D3A412A009B3D52;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				EA7B6E6E2D3A4963009B3D52 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				EA7B6E712D3A4971009B3D52 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				EA7B6E742D3A497B009B3D52 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EA7B6E0C2D3A412A009B3D52 /* Products */;
 			projectDirPath = "";
@@ -343,6 +360,51 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EA7B6E6E2D3A4963009B3D52 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		EA7B6E712D3A4971009B3D52 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
+		EA7B6E742D3A497B009B3D52 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.1.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EA7B6E6F2D3A4963009B3D52 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EA7B6E6E2D3A4963009B3D52 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		EA7B6E722D3A4971009B3D52 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EA7B6E712D3A4971009B3D52 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		EA7B6E752D3A497B009B3D52 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EA7B6E742D3A497B009B3D52 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EA7B6E032D3A412A009B3D52 /* Project object */;
 }
