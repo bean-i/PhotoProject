@@ -10,10 +10,12 @@
 		EA7B6E702D3A4963009B3D52 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = EA7B6E6F2D3A4963009B3D52 /* SnapKit */; };
 		EA7B6E732D3A4971009B3D52 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = EA7B6E722D3A4971009B3D52 /* Alamofire */; };
 		EA7B6E762D3A497B009B3D52 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = EA7B6E752D3A497B009B3D52 /* Kingfisher */; };
+		EA7B6F1B2D3A5FAF009B3D52 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = EA7B6F1A2D3A5FAF009B3D52 /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		EA7B6E0B2D3A412A009B3D52 /* PhotoProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA7B6F1A2D3A5FAF009B3D52 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -54,6 +56,7 @@
 		EA7B6E022D3A412A009B3D52 = {
 			isa = PBXGroup;
 			children = (
+				EA7B6F1A2D3A5FAF009B3D52 /* .gitignore */,
 				EA7B6E0D2D3A412A009B3D52 /* PhotoProject */,
 				EA7B6E0C2D3A412A009B3D52 /* Products */,
 			);
@@ -139,6 +142,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA7B6F1B2D3A5FAF009B3D52 /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
