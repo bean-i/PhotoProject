@@ -20,6 +20,7 @@ struct PhotoSearchData: Decodable {
 }
 
 struct Photo: Decodable {
+    let id: String
     let urls: PhotoUrl
     let likes: Int
 }
