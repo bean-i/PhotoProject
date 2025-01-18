@@ -100,10 +100,18 @@ class PhotoSearchViewController: BaseViewController {
     
     @objc func switchChanged() {
         // 최신순으로 정렬
-        params.order_by = "latest"
-        params.page = 1
-        NetworkManager.shared.getPhotoSearchData(params: params) { value in
-            self.reloadData(value: value)
+        if sortSwitch.isOn {
+            params.order_by = "latest"
+            params.page = 1
+            NetworkManager.shared.getPhotoSearchData(params: params) { value in
+                self.reloadData(value: value)
+            }
+        } else {
+            params.order_by = "relevant"
+            params.page = 1
+            NetworkManager.shared.getPhotoSearchData(params: params) { value in
+                self.reloadData(value: value)
+            }
         }
     }
     
