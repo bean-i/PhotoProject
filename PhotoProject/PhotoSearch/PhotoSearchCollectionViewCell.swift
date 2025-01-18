@@ -36,7 +36,7 @@ class PhotoSearchCollectionViewCell: BaseCollectionViewCell {
         }
         
         starView.snp.makeConstraints { make in
-            make.width.equalTo(70)
+            make.width.equalTo(75)
             make.height.equalTo(25)
             make.leading.bottom.equalToSuperview().inset(10)
         }
@@ -60,7 +60,7 @@ class PhotoSearchCollectionViewCell: BaseCollectionViewCell {
         photoImageView.clipsToBounds = true // 이거 왜?!?!?해야하는거죠...
         
         starView.backgroundColor = .darkGray
-        starView.layer.cornerRadius = 15
+        starView.layer.cornerRadius = 10
         
         starImageView.image = UIImage(systemName: "star.fill")
         starImageView.tintColor = .yellow
