@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class PhotoDetailViewController: BaseViewController {
     
@@ -22,10 +23,17 @@ class PhotoDetailViewController: BaseViewController {
     let downLabel = UILabel()
     let downCountLabel = UILabel()
     
+    var photoURL: String = ""
+    var photoId: String = ""
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        NetworkManager.shared.getPhotoStatisticsData(imageId: photoId) { value in
+            self.viewCountLabel.text = NumberFormatter.decimal(value.views.total as NSNumber)
+            self.downCountLabel.text = NumberFormatter.decimal(value.downloads.total as NSNumber)
+        }
     }
     
     override func configureHierarchy() {
@@ -40,7 +48,7 @@ class PhotoDetailViewController: BaseViewController {
         photoImageView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.horizontalEdges.equalToSuperview()
-            make.height.equalTo(200)
+            make.height.equalTo(300)
         }
         
         infoLabel.snp.makeConstraints { make in
@@ -63,8 +71,10 @@ class PhotoDetailViewController: BaseViewController {
     }
     
     override func configureView() {
-        photoImageView.backgroundColor = .blue
+        photoImageView.kf.setImage(with: URL(string: photoURL), placeholder: UIImage(systemName: "square.and.arrow.down"))
         photoImageView.contentMode = .scaleAspectFill
+        photoImageView.clipsToBounds = true
+        photoImageView.tintColor = .black
         
         infoLabel.text = "정보"
         infoLabel.font = .systemFont(ofSize: 18, weight: .heavy)
@@ -74,7 +84,7 @@ class PhotoDetailViewController: BaseViewController {
         viewLabel.text = "조회수"
         viewLabel.textAlignment = .left
         viewLabel.font = .systemFont(ofSize: 16, weight: .bold)
-        viewCountLabel.text = "1234"
+        
         viewCountLabel.textAlignment = .right
         viewCountLabel.font = .systemFont(ofSize: 16)
         
@@ -82,12 +92,9 @@ class PhotoDetailViewController: BaseViewController {
         downLabel.text = "다운로드"
         downLabel.textAlignment = .left
         downLabel.font = .systemFont(ofSize: 16, weight: .bold)
-        downCountLabel.text = "1235r45t"
+
         downCountLabel.textAlignment = .right
         downCountLabel.font = .systemFont(ofSize: 16)
-        
-        
     }
-    
     
 }
