@@ -21,7 +21,6 @@ class PhotoSearchCollectionViewCell: BaseCollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
     }
     
     override func configureHierarchy() {
