@@ -18,6 +18,7 @@ class TabBarController: UITabBarController {
     func configureTabBarController() {
         let firstVC = TopicViewController()
         firstVC.tabBarItem.image = UIImage(systemName: "chart.line.uptrend.xyaxis")
+        let firstNav = UINavigationController(rootViewController: firstVC)
         
         let secondVC = SecondViewController()
         secondVC.tabBarItem.image = UIImage(systemName: "film")
@@ -29,7 +30,7 @@ class TabBarController: UITabBarController {
         let fourthVC = FourthViewController()
         fourthVC.tabBarItem.image = UIImage(systemName: "heart")
         
-        setViewControllers([firstVC, secondVC, thirdNav, fourthVC], animated: true)
+        setViewControllers([firstNav, secondVC, thirdNav, fourthVC], animated: true)
     }
     
     func configureTabBarAppearance() {
