@@ -6,8 +6,6 @@
 //
 
 import UIKit
-import SnapKit
-import Alamofire
 
 // 검색 파라미터
 struct Parameters {
@@ -51,13 +49,13 @@ class PhotoSearchViewController: BaseViewController {
         if mainView.sortSwitch.isOn {
             params.order_by = "latest"
             params.page = 1
-            NetworkManager.shared.getPhotoSearchData(params: params) { value in
+            PhotoNetworkManager.shared.getPhotoSearchData(params: params) { value in
                 self.reloadData(value: value)
             }
         } else {
             params.order_by = "relevant"
             params.page = 1
-            NetworkManager.shared.getPhotoSearchData(params: params) { value in
+            PhotoNetworkManager.shared.getPhotoSearchData(params: params) { value in
                 self.reloadData(value: value)
             }
         }
@@ -96,18 +94,18 @@ class PhotoSearchViewController: BaseViewController {
 // MARK: - Extension - UISearchBar
 extension PhotoSearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print(#function)
-        
         guard let searchText = searchBar.text else {
             print("searchBar 오류")
             return
         }
+        view.endEditing(true)
+        
         params.query = searchText
         params.page = 1
         
         // 검색 키워드로 통신
         // 통신 완료되면 테이블뷰 리로드
-        NetworkManager.shared.getPhotoSearchData(params: params) { value in
+        PhotoNetworkManager.shared.getPhotoSearchData(params: params) { value in
             self.reloadData(value: value)
         }
     }
@@ -126,7 +124,6 @@ extension PhotoSearchViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(#function, indexPath)
         let vc = PhotoDetailViewController()
         vc.photoURL = photos[indexPath.item].urls.originalURL
         vc.photoId = photos[indexPath.item].id
@@ -137,13 +134,12 @@ extension PhotoSearchViewController: UICollectionViewDelegate, UICollectionViewD
 // MARK: - Extension - Prefetch
 extension PhotoSearchViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        print(#function, indexPaths)
         for indexPath in indexPaths {
             if indexPath.item == photos.count - 2,
                photos.count + params.per_page < total {
                 print("업데이트!")
                 params.page += 1
-                NetworkManager.shared.getPhotoSearchData(params: params) { value in
+                PhotoNetworkManager.shared.getPhotoSearchData(params: params) { value in
                     self.reloadData(value: value)
                 }
             }
