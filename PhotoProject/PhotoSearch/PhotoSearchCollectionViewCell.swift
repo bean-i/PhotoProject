@@ -14,18 +14,14 @@ class PhotoSearchCollectionViewCell: BaseCollectionViewCell {
     static let identifier = "PhotoSearchCollectionViewCell"
     
     let photoImageView = UIImageView()
-    
-    let starView = UIView()
-    let starImageView = UIImageView()
-    let starCountLabel = UILabel()
+    let starButton = StarButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
     override func configureHierarchy() {
-        starView.addSubViews(starImageView, starCountLabel)
-        contentView.addSubViews(photoImageView, starView)
+        contentView.addSubViews(photoImageView, starButton)
     }
     
     override func configureLayout() {
@@ -34,45 +30,21 @@ class PhotoSearchCollectionViewCell: BaseCollectionViewCell {
             make.size.equalTo(contentView.snp.size)
         }
         
-        starView.snp.makeConstraints { make in
-            make.width.equalTo(75)
-            make.height.equalTo(25)
+        starButton.snp.makeConstraints { make in
             make.leading.bottom.equalToSuperview().inset(10)
-        }
-        
-        starImageView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(10)
-            make.centerY.equalToSuperview()
-            make.size.equalTo(15)
-        }
-        
-        starCountLabel.snp.makeConstraints { make in
-            make.leading.equalTo(starImageView.snp.trailing).offset(5)
-            make.trailing.equalToSuperview().inset(10)
-            make.centerY.equalToSuperview()
         }
     }
     
     override func configureView() {
         photoImageView.contentMode = .scaleAspectFill
         photoImageView.tintColor = .black
-        photoImageView.clipsToBounds = true // 이거 왜?!?!?해야하는거죠...
-        
-        starView.backgroundColor = .darkGray
-        starView.layer.cornerRadius = 10
-        
-        starImageView.image = UIImage(systemName: "star.fill")
-        starImageView.tintColor = .yellow
-        
-        starCountLabel.textColor = .white
-        starCountLabel.font = .systemFont(ofSize: 10)
+        photoImageView.clipsToBounds = true
     }
     
     func configureData(data: Photo) {
         let url = URL(string: data.urls.originalURL)
         photoImageView.kf.setImage(with: url, placeholder: UIImage(systemName: "square.and.arrow.down"))
-        
-        starCountLabel.text = NumberFormatter.decimal(data.likes as NSNumber)
+        starButton.setTitle(NumberFormatter.decimal(data.likes as NSNumber), for: .normal)
         
     }
     
