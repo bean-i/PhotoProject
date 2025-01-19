@@ -25,8 +25,8 @@ class TopicCollectionViewCell: BaseCollectionViewCell {
     }
     
     override func configureHierarchy() {
-        [starImageView, starCountLabel].forEach { starView.addSubview($0) }
-        [photoImageView, starView].forEach { contentView.addSubview($0) }
+        starView.addSubViews(starImageView, starCountLabel)
+        contentView.addSubViews(photoImageView, starView)
     }
     
     override func configureLayout() {

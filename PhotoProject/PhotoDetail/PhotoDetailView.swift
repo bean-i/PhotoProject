@@ -23,11 +23,15 @@ class PhotoDetailView: BaseView {
     let downCountLabel = UILabel()
     
     override func configureHierarchy() {
+        viewStackView.addArrangedSubviews(viewLabel, viewCountLabel)
+        downStackView.addArrangedSubviews(downLabel, downCountLabel)
         
-        [viewLabel, viewCountLabel].forEach { viewStackView.addArrangedSubview($0) }
-        [downLabel, downCountLabel].forEach { downStackView.addArrangedSubview($0) }
-        
-        [photoImageView, infoLabel, viewStackView, downStackView].forEach { addSubview($0) }
+        addSubViews(
+            photoImageView,
+            infoLabel,
+            viewStackView,
+            downStackView
+        )
     }
     
     override func configureLayout() {

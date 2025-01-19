@@ -19,15 +19,13 @@ class PhotoSearchView: BaseView {
     let photoSearchCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     
     override func configureHierarchy() {
-        
-        [
+        addSubViews(
             searchBar,
             sortLabel,
             sortSwitch,
             mainLabel,
             photoSearchCollectionView
-        ].forEach { addSubview($0) }
-
+        )
     }
     
     override func configureLayout() {
