@@ -24,7 +24,7 @@
 		EA7B6E1D2D3A412B009B3D52 /* Exceptions for "PhotoProject" folder in "PhotoProject" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Application/Info.plist,
+				Info.plist,
 			);
 			target = EA7B6E0A2D3A412A009B3D52 /* PhotoProject */;
 		};
