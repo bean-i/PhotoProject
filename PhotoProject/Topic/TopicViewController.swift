@@ -17,6 +17,8 @@ class TopicViewController: BaseViewController {
     
     override func configureView() {
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.topItem?.backButtonTitle = ""
         title = "OUR TOPIC"
         
         for idx in 0..<mainView.topics.count {

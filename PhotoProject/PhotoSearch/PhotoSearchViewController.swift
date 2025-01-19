@@ -31,6 +31,8 @@ class PhotoSearchViewController: BaseViewController {
     }
     
     override func configureView() {
+        navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.topItem?.backButtonTitle = ""
         title = "SEARCH PHOTO"
         mainView.sortSwitch.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
     }
