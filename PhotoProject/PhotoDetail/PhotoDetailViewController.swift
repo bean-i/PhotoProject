@@ -6,95 +6,39 @@
 //
 
 import UIKit
-import SnapKit
 import Kingfisher
 
 class PhotoDetailViewController: BaseViewController {
     
-    let photoImageView = UIImageView()
-    
-    let infoLabel = UILabel()
-    
-    let viewStackView = UIStackView()
-    let viewLabel = UILabel()
-    let viewCountLabel = UILabel()
-    
-    let downStackView = UIStackView()
-    let downLabel = UILabel()
-    let downCountLabel = UILabel()
-    
+    var mainView = PhotoDetailView()
     var photoURL: String = ""
     var photoId: String = ""
     
-    
+    override func loadView() {
+        view = mainView
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        NetworkManager.shared.getPhotoStatisticsData(imageId: photoId) { value in
-            self.viewCountLabel.text = NumberFormatter.decimal(value.views.total as NSNumber)
-            self.downCountLabel.text = NumberFormatter.decimal(value.downloads.total as NSNumber)
-        }
-    }
-    
-    override func configureHierarchy() {
-        
-        [viewLabel, viewCountLabel].forEach { viewStackView.addArrangedSubview($0) }
-        [downLabel, downCountLabel].forEach { downStackView.addArrangedSubview($0) }
-        
-        [photoImageView, infoLabel, viewStackView, downStackView].forEach { view.addSubview($0) }
-    }
-    
-    override func configureLayout() {
-        photoImageView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
-            make.horizontalEdges.equalToSuperview()
-            make.height.equalTo(300)
-        }
-        
-        infoLabel.snp.makeConstraints { make in
-            make.top.equalTo(photoImageView.snp.bottom).offset(15)
-            make.leading.equalToSuperview().offset(15)
-        }
-        
-        viewStackView.snp.makeConstraints { make in
-            make.top.equalTo(photoImageView.snp.bottom).offset(15)
-            make.leading.equalTo(infoLabel.snp.trailing).offset(40)
-            make.trailing.equalToSuperview().inset(20)
-        }
-        
-        downStackView.snp.makeConstraints { make in
-            make.top.equalTo(viewStackView.snp.bottom).offset(10)
-            make.leading.equalTo(infoLabel.snp.trailing).offset(40)
-            make.trailing.equalToSuperview().inset(20)
-        }
-        
+        getData()
     }
     
     override func configureView() {
-        photoImageView.kf.setImage(with: URL(string: photoURL), placeholder: UIImage(systemName: "square.and.arrow.down"))
-        photoImageView.contentMode = .scaleAspectFill
-        photoImageView.clipsToBounds = true
-        photoImageView.tintColor = .black
+        navigationController?.navigationBar.prefersLargeTitles = false
+    }
+    
+    func getData() {
+        NetworkManager.shared.getPhotoStatisticsData(imageId: photoId) { value in
+            self.configureData(value: value)
+        }
+    }
+    
+    func configureData(value: PhotoDetailData) {
+        let current = self.mainView
         
-        infoLabel.text = "정보"
-        infoLabel.font = .systemFont(ofSize: 18, weight: .heavy)
-        infoLabel.setContentHuggingPriority(.required, for: .horizontal)
-        
-        viewStackView.distribution = .fillProportionally
-        viewLabel.text = "조회수"
-        viewLabel.textAlignment = .left
-        viewLabel.font = .systemFont(ofSize: 16, weight: .bold)
-        
-        viewCountLabel.textAlignment = .right
-        viewCountLabel.font = .systemFont(ofSize: 16)
-        
-        downStackView.distribution = .equalSpacing
-        downLabel.text = "다운로드"
-        downLabel.textAlignment = .left
-        downLabel.font = .systemFont(ofSize: 16, weight: .bold)
-
-        downCountLabel.textAlignment = .right
-        downCountLabel.font = .systemFont(ofSize: 16)
+        current.photoImageView.kf.setImage(with: URL(string: photoURL), placeholder: UIImage(systemName: "square.and.arrow.down"))
+        current.viewCountLabel.text = NumberFormatter.decimal(value.views.total as NSNumber)
+        current.downCountLabel.text = NumberFormatter.decimal(value.downloads.total as NSNumber)
     }
     
 }
