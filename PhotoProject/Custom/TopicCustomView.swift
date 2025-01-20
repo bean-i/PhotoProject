@@ -15,7 +15,7 @@ class TopicCustomView: BaseView {
     let topicCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     
     var topicData: [Photo] = []
-    var delegate: CustomCollectionViewDelegate?
+    weak var delegate: CustomCollectionViewDelegate?
     
     // MARK: - Init
     override init(frame: CGRect) {
