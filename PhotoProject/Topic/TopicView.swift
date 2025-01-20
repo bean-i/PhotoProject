@@ -41,12 +41,6 @@ class TopicView: BaseView {
             make.edges.equalTo(scrollView)
             make.width.equalTo(scrollView.snp.width)
         }
-        
-        topicViews.forEach { view in
-            view.snp.makeConstraints { make in
-                make.height.equalTo(300)
-            }
-        }
     }
     
     override func configureView() {

@@ -39,6 +39,7 @@ class TopicCustomView: BaseView {
             make.top.equalTo(topicLabel.snp.bottom).offset(15)
             make.horizontalEdges.equalToSuperview()
             make.height.equalTo(250)
+            make.bottom.equalToSuperview()
         }
     }
     

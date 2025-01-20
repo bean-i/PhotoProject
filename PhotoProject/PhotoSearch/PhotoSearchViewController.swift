@@ -84,12 +84,6 @@ class PhotoSearchViewController: BaseViewController {
             self.mainView.photoSearchCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
         }
     }
-    
-    // 새로운 파라미터로 데이터 초기화
-    func updateDataWithParams() {
-        
-    }
-
 }
 // MARK: - Extension - UISearchBar
 extension PhotoSearchViewController: UISearchBarDelegate {
