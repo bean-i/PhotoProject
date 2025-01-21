@@ -46,8 +46,7 @@ class PhotoSearchViewController: BaseViewController {
     @objc func switchChanged() {
         // 최신순으로 정렬
         if mainView.sortSwitch.isOn {
-            params.order_by = "latest"
-            params.page = 1
+            initData(orderBy: "latest")
             
             PhotoNetworkManager.shared.getPhotoSearchData(api: .photoSearch, params: params) { value in
                 self.reloadData(value: value)
@@ -55,8 +54,7 @@ class PhotoSearchViewController: BaseViewController {
                 self.failLoadData()
             }
         } else {
-            params.order_by = "relevant"
-            params.page = 1
+            initData()
             
             PhotoNetworkManager.shared.getPhotoSearchData(api: .photoSearch, params: params) { value in
                 self.reloadData(value: value)
@@ -64,6 +62,13 @@ class PhotoSearchViewController: BaseViewController {
                 self.failLoadData()
             }
         }
+    }
+    
+    // 초기화
+    func initData(orderBy: String = "relevant") {
+        params.page = 1
+        params.order_by = orderBy
+        photos = []
     }
     
     // 통신 실패
@@ -83,12 +88,8 @@ class PhotoSearchViewController: BaseViewController {
         // 컬렉션뷰 보이게 설정
         self.mainView.photoSearchCollectionView.isHidden = false
         
-        if params.page == 1 {
-            self.photos = value.results
-        } else {
-            self.photos.append(contentsOf: value.results)
-        }
-        
+        self.photos.append(contentsOf: value.results)
+    
         self.mainView.photoSearchCollectionView.reloadData()
         
         if params.page == 1 {
@@ -106,7 +107,7 @@ extension PhotoSearchViewController: UISearchBarDelegate {
         view.endEditing(true)
         
         params.query = searchText
-        params.page = 1
+        initData()
         
         // 검색 키워드로 통신
         // 통신 완료되면 테이블뷰 리로드
