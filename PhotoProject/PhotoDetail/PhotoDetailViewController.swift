@@ -28,7 +28,7 @@ class PhotoDetailViewController: BaseViewController {
     }
     
     func getData() {
-        PhotoNetworkManager.shared.getPhotoStatisticsData(imageId: photoId) { value in
+        PhotoNetworkManager.shared.getPhotoStatisticsData(api: .photoStatistics(id: photoId)) { value in
             self.configureData(value: value)
         }
     }

@@ -44,8 +44,7 @@ class TopicCollectionViewCell: BaseCollectionViewCell {
     }
     
     func configureData(data: Photo) {
-        let url = URL(string: data.urls.originalURL)
-        photoImageView.kf.setImage(with: url, placeholder: UIImage(systemName: "square.and.arrow.down"))
+        photoImageView.kf.setImage(with: URL(string: data.urls.thumb), placeholder: UIImage(systemName: "square.and.arrow.down"))
         
         starButton.setTitle(NumberFormatter.decimal(data.likes as NSNumber), for: .normal)
     }

@@ -27,8 +27,10 @@ struct Photo: Decodable {
 
 struct PhotoUrl: Decodable {
     let originalURL: String
+    let thumb: String
     
     enum CodingKeys: String, CodingKey {
         case originalURL = "raw"
+        case thumb
     }
 }

@@ -8,19 +8,18 @@
 import UIKit
 
 // 검색 파라미터
-struct Parameters {
+struct queryParameter: Encodable {
     var query: String = ""
     var page: Int = 1
     var per_page: Int = 20
     var order_by: String = "relevant"
-    let client_id: String = SearchPhotoAPI.clientID
 }
 
 class PhotoSearchViewController: BaseViewController {
     
     var mainView = PhotoSearchView()
     
-    var params = Parameters() // 검색 파라미터
+    var params = queryParameter() // 검색 파라미터
     var photos: [Photo] = [] // 검색 데이터를 담을 배열
     var total: Int = 0
 
@@ -49,13 +48,15 @@ class PhotoSearchViewController: BaseViewController {
         if mainView.sortSwitch.isOn {
             params.order_by = "latest"
             params.page = 1
-            PhotoNetworkManager.shared.getPhotoSearchData(params: params) { value in
+            
+            PhotoNetworkManager.shared.getPhotoSearchData(api: .photoSearch, params: params) { value in
                 self.reloadData(value: value)
             }
         } else {
             params.order_by = "relevant"
             params.page = 1
-            PhotoNetworkManager.shared.getPhotoSearchData(params: params) { value in
+            
+            PhotoNetworkManager.shared.getPhotoSearchData(api: .photoSearch, params: params) { value in
                 self.reloadData(value: value)
             }
         }
@@ -99,7 +100,7 @@ extension PhotoSearchViewController: UISearchBarDelegate {
         
         // 검색 키워드로 통신
         // 통신 완료되면 테이블뷰 리로드
-        PhotoNetworkManager.shared.getPhotoSearchData(params: params) { value in
+        PhotoNetworkManager.shared.getPhotoSearchData(api: .photoSearch, params: params) { value in
             self.reloadData(value: value)
         }
     }
@@ -133,7 +134,7 @@ extension PhotoSearchViewController: UICollectionViewDataSourcePrefetching {
                photos.count + params.per_page < total {
                 print("업데이트!")
                 params.page += 1
-                PhotoNetworkManager.shared.getPhotoSearchData(params: params) { value in
+                PhotoNetworkManager.shared.getPhotoSearchData(api: .photoSearch, params: params) { value in
                     self.reloadData(value: value)
                 }
             }

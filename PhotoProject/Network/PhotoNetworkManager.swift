@@ -5,7 +5,7 @@
 //  Created by 이빈 on 1/17/25.
 //
 
-import UIKit
+import Foundation
 import Alamofire
 
 class PhotoNetworkManager {
@@ -14,10 +14,16 @@ class PhotoNetworkManager {
     private init() { }
     
     // Photo Search API
-    func getPhotoSearchData(params: Parameters, completionHandler: @escaping (PhotoSearchData) -> Void) {
-        let url = "https://api.unsplash.com/search/photos?query=\(params.query)&page=\(params.page)&per_page=\(params.per_page)&order_by=\(params.order_by)&client_id=\(params.client_id)"
+    func getPhotoSearchData(api: Router,
+                            params: queryParameter,
+                            completionHandler: @escaping (PhotoSearchData) -> Void) {
         
-        AF.request(url, method: .get).responseDecodable(of: PhotoSearchData.self) { response in
+        AF.request(api.endpoint,
+                   method: api.method,
+                   parameters: params,
+                   headers: api.header)
+        .validate(statusCode: 200..<500)
+        .responseDecodable(of: PhotoSearchData.self) { response in
             switch response.result {
             case .success(let value):
                 completionHandler(value)
@@ -28,10 +34,14 @@ class PhotoNetworkManager {
     }
     
     // Photo Statistics API
-    func getPhotoStatisticsData(imageId: String, completionHandler: @escaping (PhotoDetailData) -> Void) {
-        let url = "https://api.unsplash.com/photos/\(imageId)/statistics?client_id=\(SearchPhotoAPI.clientID)"
+    func getPhotoStatisticsData(api: Router,
+                                completionHandler: @escaping (PhotoDetailData) -> Void) {
         
-        AF.request(url, method: .get).responseDecodable(of: PhotoDetailData.self) { response in
+        AF.request(api.endpoint,
+                   method: api.method,
+                   headers: api.header)
+        .validate(statusCode: 200..<500)
+        .responseDecodable(of: PhotoDetailData.self) { response in
             switch response.result {
             case .success(let value):
                 completionHandler(value)
@@ -39,6 +49,24 @@ class PhotoNetworkManager {
                 print(error)
             }
         }
-        
     }
+    
+    // Topic's Photo API
+    func getTopicPhotoData(api: Router,
+                           completionHandler: @escaping ([Photo]) -> Void) {
+        
+        AF.request(api.endpoint,
+                   method: api.method,
+                   headers: api.header)
+        .validate(statusCode: 200..<500)
+        .responseDecodable(of: [Photo].self) { response in
+            switch response.result {
+            case .success(let value):
+                completionHandler(value)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
 }

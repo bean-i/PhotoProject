@@ -68,7 +68,8 @@ class TopicCustomView: BaseView {
     // MARK: - ConfigureData
 
     func getData(topic: TopicQuery) {
-        TopicNetworkManager.shared.getTopicPhotoData(topic: topic.rawValue) { value in
+        
+        PhotoNetworkManager.shared.getTopicPhotoData(api: .topicPhoto(topic: topic.rawValue)) { value in
             self.topicLabel.text = topic.description
             self.topicData = value
             self.topicCollectionView.reloadData()
