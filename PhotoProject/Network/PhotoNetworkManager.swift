@@ -75,4 +75,21 @@ class PhotoNetworkManager {
         }
     }
     
+    // Random Photo
+    func getRandomPhotoData(api: Router,
+                            completionHandler: @escaping ([RandomPhotoData]) -> Void) {
+        AF.request(api.endpoint,
+                   method: api.method,
+                   headers: api.header)
+        .validate(statusCode: 200..<500)
+        .responseDecodable(of: [RandomPhotoData].self) { response in
+            switch response.result {
+            case .success(let value):
+                completionHandler(value)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
 }
