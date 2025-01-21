@@ -16,7 +16,8 @@ class PhotoNetworkManager {
     // Photo Search API
     func getPhotoSearchData(api: Router,
                             params: queryParameter,
-                            completionHandler: @escaping (PhotoSearchData) -> Void) {
+                            completionHandler: @escaping (PhotoSearchData) -> Void,
+                            failHandler: @escaping () -> Void) {
         
         AF.request(api.endpoint,
                    method: api.method,
@@ -29,13 +30,15 @@ class PhotoNetworkManager {
                 completionHandler(value)
             case .failure(let error):
                 print(error)
+                failHandler()
             }
         }
     }
     
     // Photo Statistics API
     func getPhotoStatisticsData(api: Router,
-                                completionHandler: @escaping (PhotoDetailData) -> Void) {
+                                completionHandler: @escaping (PhotoDetailData) -> Void,
+                                failHandler: @escaping () -> Void) {
         
         AF.request(api.endpoint,
                    method: api.method,
@@ -47,13 +50,15 @@ class PhotoNetworkManager {
                 completionHandler(value)
             case .failure(let error):
                 print(error)
+                failHandler()
             }
         }
     }
     
     // Topic's Photo API
     func getTopicPhotoData(api: Router,
-                           completionHandler: @escaping ([Photo]) -> Void) {
+                           completionHandler: @escaping ([Photo]) -> Void,
+                           failHandler: @escaping () -> Void) {
         
         AF.request(api.endpoint,
                    method: api.method,
@@ -65,6 +70,7 @@ class PhotoNetworkManager {
                 completionHandler(value)
             case .failure(let error):
                 print(error)
+                failHandler()
             }
         }
     }

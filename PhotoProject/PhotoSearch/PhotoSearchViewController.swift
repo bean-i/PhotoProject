@@ -51,6 +51,8 @@ class PhotoSearchViewController: BaseViewController {
             
             PhotoNetworkManager.shared.getPhotoSearchData(api: .photoSearch, params: params) { value in
                 self.reloadData(value: value)
+            } failHandler: {
+                self.failLoadData()
             }
         } else {
             params.order_by = "relevant"
@@ -58,8 +60,16 @@ class PhotoSearchViewController: BaseViewController {
             
             PhotoNetworkManager.shared.getPhotoSearchData(api: .photoSearch, params: params) { value in
                 self.reloadData(value: value)
+            } failHandler: {
+                self.failLoadData()
             }
         }
+    }
+    
+    // 통신 실패
+    func failLoadData() {
+        self.mainView.photoSearchCollectionView.isHidden = true
+        self.mainView.mainLabel.text = "데이터를 불러오는 데 실패했어요🥺"
     }
 
     // 통신 성공 -> 데이터 업데이트
@@ -102,6 +112,8 @@ extension PhotoSearchViewController: UISearchBarDelegate {
         // 통신 완료되면 테이블뷰 리로드
         PhotoNetworkManager.shared.getPhotoSearchData(api: .photoSearch, params: params) { value in
             self.reloadData(value: value)
+        } failHandler: {
+            self.failLoadData()
         }
     }
 }
@@ -136,6 +148,10 @@ extension PhotoSearchViewController: UICollectionViewDataSourcePrefetching {
                 params.page += 1
                 PhotoNetworkManager.shared.getPhotoSearchData(api: .photoSearch, params: params) { value in
                     self.reloadData(value: value)
+                } failHandler: {
+                    self.showAlert(title: "업데이트 실패", message: "새로운 데이터를 불러오는데 실패했어요🥺 네트워크 상태를 확인해 주세요.", button: "확인", cancel: false) {
+                        print("alert")
+                    }
                 }
             }
         }

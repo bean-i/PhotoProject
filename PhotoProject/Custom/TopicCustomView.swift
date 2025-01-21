@@ -72,7 +72,9 @@ class TopicCustomView: BaseView {
         PhotoNetworkManager.shared.getTopicPhotoData(api: .topicPhoto(topic: topic.rawValue)) { value in
             self.topicLabel.text = topic.description
             self.topicData = value
-            self.topicCollectionView.reloadData()
+            TopicViewController.group.leave()
+        } failHandler: {
+            TopicViewController.group.leave()
         }
     }
     

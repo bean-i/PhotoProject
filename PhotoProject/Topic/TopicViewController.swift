@@ -67,6 +67,7 @@ enum TopicQuery: String {
 class TopicViewController: BaseViewController {
     
     var mainView = TopicView()
+    static let group = DispatchGroup()
     
     override func loadView() {
         view = mainView
@@ -80,7 +81,14 @@ class TopicViewController: BaseViewController {
         
         for idx in 0..<mainView.topics.count {
             mainView.topicViews[idx].delegate = self
-            mainView.topicViews[idx].getData(topic: mainView.topics[idx]) // 이 부분 데이터 한번에 뜨게 수정해보기!!!
+            TopicViewController.group.enter()
+            mainView.topicViews[idx].getData(topic: mainView.topics[idx])
+        }
+        
+        TopicViewController.group.notify(queue: .main) {
+            for idx in 0..<self.mainView.topics.count {
+                self.mainView.topicViews[idx].topicCollectionView.reloadData()
+            }
         }
     }
 }
