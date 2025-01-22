@@ -14,7 +14,7 @@ final class TopicCustomView: BaseView {
     private let topicLabel = UILabel()
     let topicCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     
-    private var topicData: [Photo] = []
+    var topicData: [Photo] = []
     weak var delegate: CustomCollectionViewDelegate?
     
     // MARK: - Init
@@ -63,19 +63,6 @@ final class TopicCustomView: BaseView {
         layout.sectionInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
         layout.itemSize = CGSize(width: 200, height: 250)
         return layout
-    }
-    
-    // MARK: - ConfigureData
-
-    func getData(topic: TopicQuery) {
-        
-        PhotoNetworkManager.shared.getPhotoData(api: .topicPhoto(topic: topic.rawValue), type: [Photo].self) { value in
-            self.topicLabel.text = topic.description
-            self.topicData = value
-            TopicViewController.group.leave()
-        } failHandler: {
-            TopicViewController.group.leave()
-        }
     }
     
 }

@@ -12,13 +12,13 @@ final class TopicView: BaseView {
     
     private let scrollView = UIScrollView()
     private let stackView = UIStackView()
-    private let topicView = TopicCustomView()
+//    private let topicView = TopicCustomView()
     
-    let topics = [
-        TopicQuery.goldenHour,
-        TopicQuery.business,
-        TopicQuery.architecture
-    ]
+//    let topics = [
+//        TopicQuery.goldenHour,
+//        TopicQuery.business,
+//        TopicQuery.architecture
+//    ]
     
     let topicViews = [
         TopicCustomView(),

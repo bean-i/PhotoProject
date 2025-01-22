@@ -7,67 +7,17 @@
 
 import UIKit
 
-// topic id query
-enum TopicQuery: String {
-    case architecture = "architecture-interior"
-    case goldenHour = "golden-hour"
-    case wallpapers
-    case nature
-    case render3D = "3d-renders"
-    case travel
-    case pattern = "textures-patterns"
-    case street = "street-photography"
-    case film
-    case archival
-    case experimental
-    case animals
-    case fashionBeauty = "fashion-beauty"
-    case people
-    case business = "business-work"
-    case foodDrink = "food-drink"
-    
-    var description: String {
-        switch self {
-        case .architecture:
-            return "건축 및 인테리어"
-        case .goldenHour:
-            return "골든 아워"
-        case .wallpapers:
-            return "배경 화면"
-        case .nature:
-            return "자연"
-        case .render3D:
-            return "3D 렌더링"
-        case .travel:
-            return "여행하다"
-        case .pattern:
-            return "텍스쳐 및 패턴"
-        case .street:
-            return "거리 사진"
-        case .film:
-            return "필름"
-        case .archival:
-            return "기록의"
-        case .experimental:
-            return "실험적인"
-        case .animals:
-            return "동물"
-        case .fashionBeauty:
-            return "패션 및 뷰티"
-        case .people:
-            return "사람"
-        case .business:
-            return "비즈니스 및 업무"
-        case .foodDrink:
-            return "식음료"
-        }
-    }
-}
-
 final class TopicViewController: BaseViewController {
     
     private var mainView = TopicView()
-    static let group = DispatchGroup()
+    
+    private let group = DispatchGroup()
+    
+    let topics = [
+        TopicQuery.goldenHour,
+        TopicQuery.business,
+        TopicQuery.architecture
+    ]
     
     override func loadView() {
         view = mainView
@@ -75,18 +25,30 @@ final class TopicViewController: BaseViewController {
     
     override func configureView() {
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationBar.topItem?.backButtonTitle = ""
         title = "OUR TOPIC"
         
-        for idx in 0..<mainView.topics.count {
+        for idx in 0..<topics.count {
             mainView.topicViews[idx].delegate = self
-            TopicViewController.group.enter()
-            mainView.topicViews[idx].getData(topic: mainView.topics[idx])
+            group.enter()
+            // 네트워크 통신 + 토픽커스텀뷰에 데이터 넘겨주기
+            PhotoNetworkManager.shared.getPhotoData(api: .topicPhoto(topic: topics[idx].rawValue), type: [Photo].self) { value in
+                self.mainView.topicViews[idx].topicData = value
+                self.group.leave()
+            } failHandler: { statusCode in
+                self.showAlert(
+                    title: statusCode.title,
+                    message: statusCode.description,
+                    cancel: false) {
+                        print("alert")
+                    }
+                self.group.leave()
+            }
+
         }
         
-        TopicViewController.group.notify(queue: .main) {
-            for idx in 0..<self.mainView.topics.count {
+        group.notify(queue: .main) {
+            for idx in 0..<self.topics.count {
                 self.mainView.topicViews[idx].topicCollectionView.reloadData()
             }
         }
