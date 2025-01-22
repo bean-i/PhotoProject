@@ -16,6 +16,7 @@ final class PhotoDetailViewController: BaseViewController {
     
     override func loadView() {
         view = mainView
+        view.backgroundColor = .white
     }
 
     override func viewDidLoad() {
