@@ -9,20 +9,20 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-class RandomPhotoCollectionViewCell: BaseCollectionViewCell {
+final class RandomPhotoCollectionViewCell: BaseCollectionViewCell {
     
     static let identifier = "RandomPhotoCollectionViewCell"
     
-    let imageView = UIImageView()
+    private let imageView = UIImageView()
     
-    let countView = UIView()
-    let countLabel = UILabel()
+    private let countView = UIView()
+    private let countLabel = UILabel()
     
-    let infoView = UIView()
-    let profileImageView = UIImageView()
-    let nameLabel = UILabel()
-    let dateLabel = UILabel()
-    let heartButton = UIButton()
+    private let infoView = UIView()
+    private let profileImageView = UIImageView()
+    private let nameLabel = UILabel()
+    private let dateLabel = UILabel()
+    private let heartButton = UIButton()
     
     override func configureHierarchy() {
         countView.addSubview(countLabel)

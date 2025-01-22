@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-class PhotoNetworkManager {
+final class PhotoNetworkManager {
     static let shared = PhotoNetworkManager()
     
     private init() { }

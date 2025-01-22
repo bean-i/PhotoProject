@@ -8,18 +8,18 @@
 import UIKit
 import SnapKit
 
-class PhotoDetailView: BaseView {
+final class PhotoDetailView: BaseView {
     
     let photoImageView = UIImageView()
     
-    let infoLabel = UILabel()
+    private let infoLabel = UILabel()
     
-    let viewStackView = UIStackView()
-    let viewLabel = UILabel()
+    private let viewStackView = UIStackView()
+    private let viewLabel = UILabel()
     let viewCountLabel = UILabel()
     
-    let downStackView = UIStackView()
-    let downLabel = UILabel()
+    private let downStackView = UIStackView()
+    private let downLabel = UILabel()
     let downCountLabel = UILabel()
     
     override func configureHierarchy() {

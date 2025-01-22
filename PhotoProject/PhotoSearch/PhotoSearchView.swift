@@ -8,11 +8,11 @@
 import UIKit
 import SnapKit
 
-class PhotoSearchView: BaseView {
+final class PhotoSearchView: BaseView {
     
     let searchBar = UISearchBar()
     
-    let sortLabel = UILabel()
+    private let sortLabel = UILabel()
     let sortSwitch = UISwitch()
     
     let mainLabel = UILabel()
@@ -63,7 +63,7 @@ class PhotoSearchView: BaseView {
         photoSearchCollectionView.isHidden = true
     }
     
-    func configureCollectionVeiwLayout() -> UICollectionViewLayout {
+    private func configureCollectionVeiwLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let spacing: CGFloat = 5

@@ -8,13 +8,13 @@
 import UIKit
 import SnapKit
 
-class TopicCustomView: BaseView {
+final class TopicCustomView: BaseView {
     
     // MARK: - Properties
-    let topicLabel = UILabel()
+    private let topicLabel = UILabel()
     let topicCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     
-    var topicData: [Photo] = []
+    private var topicData: [Photo] = []
     weak var delegate: CustomCollectionViewDelegate?
     
     // MARK: - Init
@@ -47,7 +47,7 @@ class TopicCustomView: BaseView {
         topicLabel.font = .systemFont(ofSize: 20, weight: .bold)
     }
     
-    func configureCollectionView() {
+    private func configureCollectionView() {
         topicCollectionView.delegate = self
         topicCollectionView.dataSource = self
         
@@ -55,7 +55,7 @@ class TopicCustomView: BaseView {
         topicCollectionView.collectionViewLayout = configureCollectionViewLayout()
     }
     
-    func configureCollectionViewLayout() -> UICollectionViewLayout {
+    private func configureCollectionViewLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let spacing: CGFloat = 10

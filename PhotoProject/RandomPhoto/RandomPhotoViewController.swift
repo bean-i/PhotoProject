@@ -9,11 +9,11 @@ import UIKit
 import Alamofire
 import SnapKit
 
-class RandomPhotoViewController: BaseViewController {
+final class RandomPhotoViewController: BaseViewController {
 
-    let randomCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
+    private let randomCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     
-    var randomPhotos: [RandomPhotoData] = []
+    private var randomPhotos: [RandomPhotoData] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +55,7 @@ class RandomPhotoViewController: BaseViewController {
         randomCollectionView.contentInsetAdjustmentBehavior = .never // ...
     }
     
-    func configureCollectionViewLayout() -> UICollectionViewLayout {
+    private func configureCollectionViewLayout() -> UICollectionViewLayout {
         print(#function)
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical

@@ -8,11 +8,11 @@
 import UIKit
 import SnapKit
 
-class TopicView: BaseView {
+final class TopicView: BaseView {
     
-    let scrollView = UIScrollView()
-    let stackView = UIStackView()
-    let topicView = TopicCustomView()
+    private let scrollView = UIScrollView()
+    private let stackView = UIStackView()
+    private let topicView = TopicCustomView()
     
     let topics = [
         TopicQuery.goldenHour,

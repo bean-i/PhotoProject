@@ -64,9 +64,9 @@ enum TopicQuery: String {
     }
 }
 
-class TopicViewController: BaseViewController {
+final class TopicViewController: BaseViewController {
     
-    var mainView = TopicView()
+    private var mainView = TopicView()
     static let group = DispatchGroup()
     
     override func loadView() {

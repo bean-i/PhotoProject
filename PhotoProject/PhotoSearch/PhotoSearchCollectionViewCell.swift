@@ -9,12 +9,12 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-class PhotoSearchCollectionViewCell: BaseCollectionViewCell {
+final class PhotoSearchCollectionViewCell: BaseCollectionViewCell {
     
     static let identifier = "PhotoSearchCollectionViewCell"
     
-    let photoImageView = UIImageView()
-    let starButton = StarButton()
+    private let photoImageView = UIImageView()
+    private let starButton = StarButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)

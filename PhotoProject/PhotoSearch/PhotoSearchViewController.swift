@@ -15,13 +15,13 @@ struct queryParameter: Encodable {
     var order_by: String = "relevant"
 }
 
-class PhotoSearchViewController: BaseViewController {
+final class PhotoSearchViewController: BaseViewController {
     
-    var mainView = PhotoSearchView()
+    private var mainView = PhotoSearchView()
     
-    var params = queryParameter() // 검색 파라미터
-    var photos: [Photo] = [] // 검색 데이터를 담을 배열
-    var total: Int = 0
+    private var params = queryParameter() // 검색 파라미터
+    private var photos: [Photo] = [] // 검색 데이터를 담을 배열
+    private var total: Int = 0
 
     override func loadView() {
         view = mainView
@@ -42,7 +42,7 @@ class PhotoSearchViewController: BaseViewController {
         mainView.photoSearchCollectionView.prefetchDataSource = self
     }
     
-    @objc func switchChanged() {
+    @objc private func switchChanged() {
         // 최신순으로 정렬
         if mainView.sortSwitch.isOn {
             initData(orderBy: "latest")
@@ -64,20 +64,20 @@ class PhotoSearchViewController: BaseViewController {
     }
     
     // 초기화
-    func initData(orderBy: String = "relevant") {
+    private func initData(orderBy: String = "relevant") {
         params.page = 1
         params.order_by = orderBy
         photos = []
     }
     
     // 통신 실패
-    func failLoadData() {
+    private func failLoadData() {
         self.mainView.photoSearchCollectionView.isHidden = true
         self.mainView.mainLabel.text = "데이터를 불러오는 데 실패했어요🥺"
     }
 
     // 통신 성공 -> 데이터 업데이트
-    func reloadData(value: PhotoSearchData) {
+    private func reloadData(value: PhotoSearchData) {
         total = value.total
         if total == 0 {
             self.mainView.photoSearchCollectionView.isHidden = true

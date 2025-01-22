@@ -8,9 +8,9 @@
 import UIKit
 import Kingfisher
 
-class PhotoDetailViewController: BaseViewController {
+final class PhotoDetailViewController: BaseViewController {
     
-    var mainView = PhotoDetailView()
+    private var mainView = PhotoDetailView()
     var photoURL: String = ""
     var photoId: String = ""
     
@@ -28,7 +28,7 @@ class PhotoDetailViewController: BaseViewController {
         navigationController?.navigationBar.prefersLargeTitles = false
     }
     
-    func getData() {
+    private func getData() {
         
         PhotoNetworkManager.shared.getPhotoData(api: .photoStatistics(id: photoId), type: PhotoDetailData.self) { value in
             self.configureData(value: value)
@@ -39,7 +39,7 @@ class PhotoDetailViewController: BaseViewController {
         }
     }
     
-    func configureData(value: PhotoDetailData) {
+    private func configureData(value: PhotoDetailData) {
         let current = self.mainView
         
         current.photoImageView.kf.setImage(with: URL(string: photoURL), placeholder: UIImage(systemName: "square.and.arrow.down"))

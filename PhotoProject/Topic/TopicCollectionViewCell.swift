@@ -9,13 +9,13 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-class TopicCollectionViewCell: BaseCollectionViewCell {
+final class TopicCollectionViewCell: BaseCollectionViewCell {
     
     static let identifier = "TopicCollectionViewCell"
     
-    let photoImageView = UIImageView()
+    private let photoImageView = UIImageView()
     
-    let starButton = StarButton()
+    private let starButton = StarButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
