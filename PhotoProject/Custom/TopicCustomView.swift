@@ -69,7 +69,7 @@ class TopicCustomView: BaseView {
 
     func getData(topic: TopicQuery) {
         
-        PhotoNetworkManager.shared.getTopicPhotoData(api: .topicPhoto(topic: topic.rawValue)) { value in
+        PhotoNetworkManager.shared.getPhotoData(api: .topicPhoto(topic: topic.rawValue), type: [Photo].self) { value in
             self.topicLabel.text = topic.description
             self.topicData = value
             TopicViewController.group.leave()

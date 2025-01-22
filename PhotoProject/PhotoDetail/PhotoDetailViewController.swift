@@ -20,6 +20,7 @@ class PhotoDetailViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.isHidden = false
         getData()
     }
     
@@ -28,7 +29,8 @@ class PhotoDetailViewController: BaseViewController {
     }
     
     func getData() {
-        PhotoNetworkManager.shared.getPhotoStatisticsData(api: .photoStatistics(id: photoId)) { value in
+        
+        PhotoNetworkManager.shared.getPhotoData(api: .photoStatistics(id: photoId), type: PhotoDetailData.self) { value in
             self.configureData(value: value)
         } failHandler: {
             self.showAlert(title: "업데이트 실패", message: "새로운 데이터를 불러오는데 실패했어요🥺 네트워크 상태를 확인해 주세요.", button: "확인", cancel: false) {

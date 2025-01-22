@@ -17,11 +17,13 @@ class RandomPhotoViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.topItem?.backButtonTitle = ""
         
-        PhotoNetworkManager.shared.getRandomPhotoData(api: .randomPhoto) { value in
-            print(value)
+        PhotoNetworkManager.shared.getPhotoData(api: .randomPhoto, type: [RandomPhotoData].self) { value in
             self.randomPhotos = value
             self.randomCollectionView.reloadData()
+        } failHandler: {
+            print("통신 실패")
         }
         
     }
