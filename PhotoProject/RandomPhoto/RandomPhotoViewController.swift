@@ -22,8 +22,13 @@ final class RandomPhotoViewController: BaseViewController {
         PhotoNetworkManager.shared.getPhotoData(api: .randomPhoto, type: [RandomPhotoData].self) { value in
             self.randomPhotos = value
             self.randomCollectionView.reloadData()
-        } failHandler: {
-            print("통신 실패")
+        } failHandler: { statusCode in
+            self.showAlert(
+                title: statusCode.title,
+                message: statusCode.description,
+                cancel: false) {
+                    print("alert")
+                }
         }
         
     }
@@ -56,7 +61,6 @@ final class RandomPhotoViewController: BaseViewController {
     }
     
     private func configureCollectionViewLayout() -> UICollectionViewLayout {
-        print(#function)
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 0
@@ -84,7 +88,6 @@ extension RandomPhotoViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(#function)
         let vc = PhotoDetailViewController()
         vc.photoURL = randomPhotos[indexPath.item].urls.originalURL
         vc.photoId = randomPhotos[indexPath.item].id

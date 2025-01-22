@@ -49,16 +49,28 @@ final class PhotoSearchViewController: BaseViewController {
             
             PhotoNetworkManager.shared.getPhotoData(api: .photoSearch, type: PhotoSearchData.self, params: params) { value in
                 self.reloadData(value: value)
-            } failHandler: {
-                self.failLoadData()
+            } failHandler: { statusCode in
+                self.mainView.photoSearchCollectionView.isHidden = true
+                self.showAlert(
+                    title: statusCode.title,
+                    message: statusCode.description,
+                    cancel: false) {
+                        print("alert")
+                    }
             }
         } else {
             initData()
             
             PhotoNetworkManager.shared.getPhotoData(api: .photoSearch, type: PhotoSearchData.self, params: params) { value in
                 self.reloadData(value: value)
-            } failHandler: {
-                self.failLoadData()
+            } failHandler: { statusCode in
+                self.mainView.photoSearchCollectionView.isHidden = true
+                self.showAlert(
+                    title: statusCode.title,
+                    message: statusCode.description,
+                    cancel: false) {
+                        print("alert")
+                    }
             }
         }
     }
@@ -68,12 +80,6 @@ final class PhotoSearchViewController: BaseViewController {
         params.page = 1
         params.order_by = orderBy
         photos = []
-    }
-    
-    // 통신 실패
-    private func failLoadData() {
-        self.mainView.photoSearchCollectionView.isHidden = true
-        self.mainView.mainLabel.text = "데이터를 불러오는 데 실패했어요🥺"
     }
 
     // 통신 성공 -> 데이터 업데이트
@@ -115,8 +121,13 @@ extension PhotoSearchViewController: UISearchBarDelegate {
                                                 type: PhotoSearchData.self,
                                                 params: params) { value in
             self.reloadData(value: value)
-        } failHandler: {
-            self.failLoadData()
+        } failHandler: { statusCode in
+            self.showAlert(
+                title: statusCode.title,
+                message: statusCode.description,
+                cancel: false) {
+                    print("alert")
+                }
         }
     }
 }
@@ -147,15 +158,18 @@ extension PhotoSearchViewController: UICollectionViewDataSourcePrefetching {
         for indexPath in indexPaths {
             if indexPath.item == photos.count - 2,
                photos.count + params.per_page < total {
-                print("업데이트!")
                 params.page += 1
                 
                 PhotoNetworkManager.shared.getPhotoData(api: .photoSearch, type: PhotoSearchData.self, params: params) { value in
                     self.reloadData(value: value)
-                } failHandler: {
-                    self.showAlert(title: "업데이트 실패", message: "새로운 데이터를 불러오는데 실패했어요🥺 네트워크 상태를 확인해 주세요.", button: "확인", cancel: false) {
-                        print("alert")
-                    }
+                } failHandler: { statusCode in
+                    self.mainView.photoSearchCollectionView.isHidden = true
+                    self.showAlert(
+                        title: statusCode.title,
+                        message: statusCode.description,
+                        cancel: false) {
+                            print("alert")
+                        }
                 }
             }
         }
