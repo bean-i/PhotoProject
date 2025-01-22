@@ -26,6 +26,11 @@ class RandomPhotoViewController: BaseViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+    }
+    
     override func configureHierarchy() {
         view.addSubview(randomCollectionView)
     }
@@ -33,7 +38,8 @@ class RandomPhotoViewController: BaseViewController {
     override func configureLayout() {
         
         randomCollectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.horizontalEdges.equalToSuperview()
+            make.height.equalTo(UIScreen.main.bounds.height - self.tabBarController!.tabBar.frame.size.height)
         }
     }
     
@@ -43,11 +49,12 @@ class RandomPhotoViewController: BaseViewController {
         randomCollectionView.register(RandomPhotoCollectionViewCell.self, forCellWithReuseIdentifier: RandomPhotoCollectionViewCell.identifier)
         randomCollectionView.collectionViewLayout = configureCollectionViewLayout()
         randomCollectionView.showsVerticalScrollIndicator = false
-        randomCollectionView.isPagingEnabled = true
+        randomCollectionView.isPagingEnabled = true // 테이블뷰의 크기만큼..
         randomCollectionView.contentInsetAdjustmentBehavior = .never // ...
     }
     
     func configureCollectionViewLayout() -> UICollectionViewLayout {
+        print(#function)
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 0
@@ -80,9 +87,6 @@ extension RandomPhotoViewController: UICollectionViewDelegate, UICollectionViewD
         vc.photoURL = randomPhotos[indexPath.item].urls.originalURL
         vc.photoId = randomPhotos[indexPath.item].id
         navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     }
     
 }
