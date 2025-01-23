@@ -23,8 +23,12 @@ final class TopicViewController: BaseViewController {
         view = mainView
     }
     
-    override func configureView() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
+    override func configureView() {
         navigationController?.navigationBar.topItem?.backButtonTitle = ""
         title = "OUR TOPIC"
         
