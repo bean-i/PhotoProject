@@ -14,6 +14,7 @@ enum Router {
     case photoStatistics(id: String)
     case topicPhoto(topic: String)
     case randomPhoto
+    case getPhoto(id: String)
     
     var baseURL: String {
         return "https://api.unsplash.com"
@@ -29,6 +30,8 @@ enum Router {
             return URL(string: baseURL + "/topics/\(topic)/photos")!
         case .randomPhoto:
             return URL(string: baseURL + "/photos/random?count=10")!
+        case .getPhoto(let id):
+            return URL(string: baseURL + "/photos/\(id)")!
         }
     }
     
@@ -45,6 +48,8 @@ enum Router {
         case .topicPhoto:
             return .get
         case .randomPhoto:
+            return .get
+        case .getPhoto:
             return .get
         }
     }
