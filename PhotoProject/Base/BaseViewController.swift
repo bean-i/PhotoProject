@@ -15,6 +15,7 @@ class BaseViewController: UIViewController {
         configureLayout()
         configureView()
         configureDelegate()
+        bindData()
     }
     
     func configureHierarchy() { }
@@ -24,4 +25,6 @@ class BaseViewController: UIViewController {
     func configureView() { }
     
     func configureDelegate() { }
+    
+    func bindData() { }
 }
