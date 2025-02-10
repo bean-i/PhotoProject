@@ -32,12 +32,12 @@ class PhotoDetailViewModel: BaseViewModel {
     }
     
     func transform() {
-        input.viewDidLoadTrigger.lazyBind { _ in
-            self.output.viewDidLoadTrigger.value = ()
+        input.viewDidLoadTrigger.lazyBind { [weak self] _ in
+            self?.output.viewDidLoadTrigger.value = ()
         }
         
-        input.photoID.lazyBind { _ in
-            self.fetchData()
+        input.photoID.lazyBind { [weak self] _ in
+            self?.fetchData()
         }
     }
     
