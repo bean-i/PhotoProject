@@ -63,8 +63,9 @@ extension TopicViewController: CustomCollectionViewDelegate {
     func didSelectItemData(data: Photo) {
         // 화면 전환
         let vc = PhotoDetailViewController()
-        vc.photoId = data.id
-        vc.photoURL = data.urls.originalURL
+        print("토픽 화면: 화면 전환")
+        vc.viewModel.input.photoID.value = data.id
+        vc.viewModel.output.photoURL.value = data.urls.originalURL
         navigationController?.pushViewController(vc, animated: true)
     }
 }
