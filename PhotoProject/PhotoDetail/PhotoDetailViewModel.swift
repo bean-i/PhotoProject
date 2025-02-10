@@ -38,6 +38,10 @@ class PhotoDetailViewModel: BaseViewModel {
         }
         
         input.photoID.lazyBind { [weak self] _ in
+            // 이 경우, 네트워크 통신 안의 output 설정 코드가 있는데
+            // 만약 네트워크 통신이 굉장히 빨리 돼서 (output 대응 코드가 있는)뷰컨의 ViewDidLoad가 채 실행되기 전에
+            // 네트워크 통신이 끝난다면, 제대로 적용이 안 될 수 있을 것 같다.
+            // -> 해당 코드의 output 대응 코드를 lazyBind가 아닌 bind로 설정하도록..
             self?.fetchData()
             self?.fetchUserData()
         }

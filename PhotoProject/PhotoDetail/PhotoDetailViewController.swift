@@ -33,7 +33,7 @@ final class PhotoDetailViewController: BaseViewController {
             self?.navigationController?.navigationBar.prefersLargeTitles = false
         }
         
-        viewModel.output.configureUserData.lazyBind { [weak self] data in
+        viewModel.output.configureUserData.bind { [weak self] data in
             
             guard let data else {
                 print("데이터 오류")
@@ -62,7 +62,7 @@ final class PhotoDetailViewController: BaseViewController {
             }
         }
         
-        viewModel.output.configurePhotoData.lazyBind { [weak self] data in
+        viewModel.output.configurePhotoData.bind { [weak self] data in
             guard let data else {
                 print("데이터가 nil")
                 return
@@ -72,7 +72,7 @@ final class PhotoDetailViewController: BaseViewController {
             self?.mainView.downCountLabel.text = NumberFormatter.decimal(data.downloads.total as NSNumber)
         }
         
-        viewModel.output.configureError.lazyBind { [weak self] statusCode in
+        viewModel.output.configureError.bind { [weak self] statusCode in
             guard let statusCode else {
                 print("오류 nil")
                 return
