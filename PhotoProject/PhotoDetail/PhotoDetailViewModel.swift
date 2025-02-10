@@ -18,7 +18,8 @@ class PhotoDetailViewModel: BaseViewModel {
     struct Output {
         let viewDidLoadTrigger: Observable<Void> = Observable(())
         let photoURL: Observable<String> = Observable("")
-        let configureData: Observable<PhotoDetailData?> = Observable(nil)
+        let configurePhotoData: Observable<PhotoDetailData?> = Observable(nil)
+        let configureUserData: Observable<RandomPhotoData?> = Observable(nil)
         let configureError: Observable<StatusCode?> = Observable(nil)
     }
     
@@ -38,15 +39,24 @@ class PhotoDetailViewModel: BaseViewModel {
         
         input.photoID.lazyBind { [weak self] _ in
             self?.fetchData()
+            self?.fetchUserData()
         }
     }
     
     private func fetchData() {
         print(input.photoID.value)
-        PhotoNetworkManager.shared.getPhotoData(api: .photoStatistics(id: input.photoID.value), type: PhotoDetailData.self) { value in
-            self.output.configureData.value = value
-        } failHandler: { statusCode in
-            self.output.configureError.value = statusCode
+        PhotoNetworkManager.shared.getPhotoData(api: .photoStatistics(id: input.photoID.value), type: PhotoDetailData.self) { [weak self] value in
+            self?.output.configurePhotoData.value = value
+        } failHandler: { [weak self] statusCode in
+            self?.output.configureError.value = statusCode
+        }
+    }
+    
+    private func fetchUserData() {
+        PhotoNetworkManager.shared.getPhotoData(api: .getPhoto(id: input.photoID.value), type: RandomPhotoData.self) { [weak self] value in
+            self?.output.configureUserData.value = value
+        } failHandler: { [weak self] statusCode in
+            self?.output.configureError.value = statusCode
         }
     }
     

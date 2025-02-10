@@ -10,6 +10,12 @@ import SnapKit
 
 final class PhotoDetailView: BaseView {
     
+    private let infoView = UIView()
+    let profileImageView = UIImageView()
+    let nameLabel = UILabel()
+    let dateLabel = UILabel()
+    private let heartButton = UIButton()
+    
     let photoImageView = UIImageView()
     
     private let infoLabel = UILabel()
@@ -23,10 +29,13 @@ final class PhotoDetailView: BaseView {
     let downCountLabel = UILabel()
     
     override func configureHierarchy() {
+        infoView.addSubViews(profileImageView, nameLabel, dateLabel, heartButton)
+        
         viewStackView.addArrangedSubviews(viewLabel, viewCountLabel)
         downStackView.addArrangedSubviews(downLabel, downCountLabel)
         
         addSubViews(
+            infoView,
             photoImageView,
             infoLabel,
             viewStackView,
@@ -35,8 +44,35 @@ final class PhotoDetailView: BaseView {
     }
     
     override func configureLayout() {
-        photoImageView.snp.makeConstraints { make in
+        infoView.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide)
+            make.horizontalEdges.equalToSuperview()
+            make.height.equalTo(70)
+        }
+        
+        profileImageView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().inset(20)
+            make.size.equalTo(40)
+        }
+        
+        nameLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(20)
+            make.leading.equalTo(profileImageView.snp.trailing).offset(10)
+        }
+        
+        dateLabel.snp.makeConstraints { make in
+            make.top.equalTo(nameLabel.snp.bottom).offset(3)
+            make.leading.equalTo(profileImageView.snp.trailing).offset(10)
+        }
+        
+        heartButton.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().inset(20)
+        }
+        
+        photoImageView.snp.makeConstraints { make in
+            make.top.equalTo(infoView.snp.bottom)
             make.horizontalEdges.equalToSuperview()
             make.height.equalTo(300)
         }
@@ -60,6 +96,24 @@ final class PhotoDetailView: BaseView {
     }
     
     override func configureView() {
+        infoView.backgroundColor = .clear
+        
+        profileImageView.clipsToBounds = true
+        profileImageView.layer.cornerRadius = 20
+        profileImageView.contentMode = .scaleAspectFill
+        
+        nameLabel.textColor = .black
+        nameLabel.font = .systemFont(ofSize: 14)
+        nameLabel.textAlignment = .left
+        
+        dateLabel.textColor = .black
+        dateLabel.font = .systemFont(ofSize: 13, weight: .semibold)
+        dateLabel.textAlignment = .left
+        
+        heartButton.backgroundColor = .clear
+        heartButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        heartButton.tintColor = .black
+        
         photoImageView.contentMode = .scaleAspectFill
         photoImageView.clipsToBounds = true
         photoImageView.tintColor = .black

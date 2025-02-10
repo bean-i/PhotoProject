@@ -22,6 +22,10 @@ final class PhotoDetailViewController: BaseViewController {
         viewModel.input.viewDidLoadTrigger.value = ()
     }
     
+    deinit {
+        print("PhotoDetailViewController Deinit")
+    }
+    
     override func bindData() {
         viewModel.output.viewDidLoadTrigger.lazyBind { [weak self] _ in
             self?.view.backgroundColor = .white
@@ -29,9 +33,28 @@ final class PhotoDetailViewController: BaseViewController {
             self?.navigationController?.navigationBar.prefersLargeTitles = false
         }
         
+        viewModel.output.configureUserData.lazyBind { [weak self] data in
+            
+            guard let data else {
+                print("데이터 오류")
+                return
+            }
+            
+            if let url = URL(string: data.user.profile_image.medium) {
+                self?.mainView.profileImageView.kf.setImage(with: url, placeholder: UIImage(systemName: "square.and.arrow.down"))
+            }
+            
+            self?.mainView.nameLabel.text = data.user.name
+
+            let date = DateFormatter.isoFormat(data.created_at)!
+            self?.mainView.dateLabel.text = "\(DateFormatter.stringFromDate(date)) 게시됨"
+        }
+        
         // lazyBind로 하면 안 됨.
-        // lazyBind는 뷰디드로드 하고 나서 바뀌는 값에 대해서만 클로저가 실행 됨.
+        // 이미 viewDidLoad시점에 최종 데이터가 들어가 있음.
+        // 여기서 lazyBind는 뷰디드로드 하고 나서 바뀌는 값에 대해서만 클로저가 실행 됨.
         viewModel.output.photoURL.bind { [weak self] data in
+            print("photoURL")
             if let url = URL(string: data) {
                 self?.mainView.photoImageView.kf.setImage(with: url, placeholder: UIImage(systemName: "square.and.arrow.down"))
             } else {
@@ -39,7 +62,7 @@ final class PhotoDetailViewController: BaseViewController {
             }
         }
         
-        viewModel.output.configureData.lazyBind { [weak self] data in
+        viewModel.output.configurePhotoData.lazyBind { [weak self] data in
             guard let data else {
                 print("데이터가 nil")
                 return
@@ -49,13 +72,13 @@ final class PhotoDetailViewController: BaseViewController {
             self?.mainView.downCountLabel.text = NumberFormatter.decimal(data.downloads.total as NSNumber)
         }
         
-        viewModel.output.configureError.lazyBind { statusCode in
+        viewModel.output.configureError.lazyBind { [weak self] statusCode in
             guard let statusCode else {
                 print("오류 nil")
                 return
             }
             
-            self.showAlert(
+            self?.showAlert(
                 title: statusCode.title,
                 message: statusCode.description,
                 cancel: false) {
